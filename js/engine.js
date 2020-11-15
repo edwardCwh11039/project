@@ -137,10 +137,9 @@ function init() {
 
   window.addEventListener("keydown", pause, true);
 }
-function handleMouseDown(e){
+function handleMouseDown(e) {
   var mousex = e.offsetX;
   var mousey = e.offsetY;
-  if()
 }
 
 function playGame() {
@@ -155,7 +154,7 @@ function playGame() {
     }
     console.log("hi");
   };
-  canvas.onmousedown= handleMouseDown;
+  canvas.onmousedown = handleMouseDown;
 
   ply.draw();
   ply.shoot();
@@ -173,31 +172,30 @@ function playGame() {
   showInfo();
 }
 
-// 定时器加载，使图片缓慢往下面移动
-setInterval(function () {
-  sky.paint();
-  sky.step();
-  if (state == START) {
-    context.font = "bold 20px Stylus";
-    context.fillText("Aircraft War", 180, 50);
-    context.font = "italic 15px Stylus";
-    context.fillText("simple click on the screen to start", 130, 450);
-  } else if (state == STARTING) {
-    init();
-  } else if (state == RUNNING) {
-    context.globalAlpha = 1;
-    playGame();
-  } else if (state == PAUSE) {
-    pauseBtn = new button(50, 50, 200, 100);
-    context.fillStyle = "blue";
-    context.globalAlpha = 0.5;
-    context.fillRect(pauseBtn.x, pauseBtn.y, pauseBtn.width, pauseBtn.height);
-  } else if (state == GAMEOVER) {
-    console.log("lose");
-    ply.draw();
-    drawEnemies();
-    showInfo();
-    context.font = "bold 50px Stylus";
-    context.fillText("Game Over", 110, 300);
-  }
-}, 100);
+// setInterval(function () {
+//   sky.paint();
+//   sky.step();
+//   if (state == START) {
+//     context.font = "bold 20px Stylus";
+//     context.fillText("Aircraft War", 180, 50);
+//     context.font = "italic 15px Stylus";
+//     context.fillText("simple click on the screen to start", 130, 450);
+//   } else if (state == STARTING) {
+//     init();
+//   } else if (state == RUNNING) {
+//     context.globalAlpha = 1;
+//     playGame();
+//   } else if (state == PAUSE) {
+//     pauseBtn = new button(50, 50, 200, 100);
+//     context.fillStyle = "blue";
+//     context.globalAlpha = 0.5;
+//     context.fillRect(pauseBtn.x, pauseBtn.y, pauseBtn.width, pauseBtn.height);
+//   } else if (state == GAMEOVER) {
+//     console.log("lose");
+//     ply.draw();
+//     drawEnemies();
+//     showInfo();
+//     context.font = "bold 50px Stylus";
+//     context.fillText("Game Over", 110, 300);
+//   }
+// }, 100);
