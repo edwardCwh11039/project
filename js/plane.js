@@ -1,5 +1,5 @@
 class Plane {
-  constructor(hp, X, Y, sizeX, sizeY,score , boomimage, imagesrc) {
+  constructor(hp, X, Y, sizeX, sizeY, score, boomimage, imagesrc) {
     this.x = X;
     this.y = Y;
 
@@ -17,7 +17,7 @@ class Plane {
     this.imgnode.src = imagesrc;
     this.time = 0;
 
-    this.score =0;
+    this.score = 0;
   }
 
   draw() {
@@ -41,8 +41,8 @@ class Plane {
   hitted() {
     this.life--;
     if (this.life <= 0) {
-        this.imgnode.src = this.planboomimage;
-        state = GAMEOVER;
+      this.imgnode.src = this.planboomimage;
+      state = GAMEOVER;
     }
   }
 }

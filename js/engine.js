@@ -1,25 +1,30 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
+//game state type
 var START = 0;
 var STARTING = 1;
 var RUNNING = 2;
 var PAUSE = 3;
 var GAMEOVER = 4;
 
+//declare current game state && window width,height
 var state = START;
 var WIDTH = 480;
 var HEIGHT = 640;
 
+//setup background as a image componet and declare the source
 var bg = new Image();
 bg.src = "img/bg.jpg";
 
+//declare the background size
 var BG = {
   imgs: bg,
   width: 480,
   height: 852,
 };
 
+//backgorund class
 function Bg(config) {
   this.imgs = config.imgs;
   this.width = config.width;
@@ -30,10 +35,13 @@ function Bg(config) {
   this.x2 = 0;
   this.y2 = -this.height;
 
+  //render the background
   this.paint = function () {
     context.drawImage(this.imgs, this.x1, this.y1);
+    context.drawImage(this.imgs, this.x2, this.y2);
   };
 
+  //move the background.
   this.step = function () {
     this.y1++;
     this.y2++;
@@ -103,7 +111,11 @@ function showInfo() {
 
 function pause(e) {
   if (e.keyCode == 27) {
-    state = PAUSE;
+    if (state == PAUSE) {
+      state = RUNNING;
+    } else {
+      state = PAUSE;
+    }
   }
 }
 
@@ -114,8 +126,8 @@ function init() {
     3,
     20,
     20,
-    66,
-    80,
+    98,
+    122,
     0,
     "img/new/me_die1.png",
     "img/new/me.png"
@@ -134,13 +146,18 @@ function playGame() {
   canvas.onmousemove = function (e) {
     var mousex = e.offsetX;
     var mousey = e.offsetY;
-    if (mousex + ply.width < canvas.getBoundingClientRect().width) {
+    if (
+      mousex + ply.width / 2 < canvas.getBoundingClientRect().width &&
+      mousex >= ply.width / 2
+    ) {
       ply.x = mousex - ply.width / 2;
     }
-    if (mousex + ply.width < canvas.getBoundingClientRect().width) {
+    if (
+      mousey + ply.height / 2 < canvas.getBoundingClientRect().height &&
+      mousey >= ply.height / 2
+    ) {
       ply.y = mousey - ply.height / 2;
     }
-    console.log("hi");
   };
   canvas.onmousedown = handleMouseDown;
 
@@ -151,7 +168,7 @@ function playGame() {
   BulletsMove();
   removeBullet();
 
-  createEnemies();
+  createEnemies(ply);
   drawEnemies();
   EnemiesMove();
   hitEnemies();
@@ -174,10 +191,12 @@ setInterval(function () {
     context.globalAlpha = 1;
     playGame();
   } else if (state == PAUSE) {
-    pauseBtn = new button(50, 50, 200, 100);
-    context.fillStyle = "blue";
-    context.globalAlpha = 0.5;
-    context.fillRect(pauseBtn.x, pauseBtn.y, pauseBtn.width, pauseBtn.height);
+    ply.draw();
+    drawBullets();
+    drawEnemies();
+    showInfo();
+    context.font = "bold 50px Stylus";
+    context.fillText("Paused", 110, 300);
   } else if (state == GAMEOVER) {
     ply.draw();
     drawEnemies();

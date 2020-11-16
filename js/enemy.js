@@ -1,5 +1,5 @@
 class enemy {
-  constructor(hp, X, Y, sizeX, sizeY, boomimage, imagesrc) {
+  constructor(hp, X, Y, sizeX, sizeY, Score, boomimage, imagesrc) {
     this.x = X;
     this.y = Y;
 
@@ -12,9 +12,10 @@ class enemy {
     this.crash = false;
     this.life = hp;
 
+    this.score = Score;
+
     this.imgnode = document.createElement("img");
     this.imgnode.src = imagesrc;
-    this.time = 0;
   }
   draw() {
     context.drawImage(this.imgnode, this.x, this.y);
@@ -33,25 +34,64 @@ class enemy {
   hitted(object) {
     this.life--;
     if (this.life == 0) {
+      this.imgnode.src = this.crashImg;
       this.crash = true;
     }
   }
 }
 
-function createEnemies() {
-  var num = Math.random();
-  if (num < 0.1) {
-    enemies.push(
-      new enemy(
-        1,
-        Math.floor(Math.random() * (canvas.getBoundingClientRect().width - 57)),
-        -51,
-        57,
-        51,
-        "img/new/plain1_die1.png",
-        "img/new/plain1.png"
-      )
-    );
+function createEnemies(player) {
+  var i = Math.floor(Math.random() * 10);
+  console.log(i);
+  switch (i) {
+    case 1:
+      enemies.push(
+        new enemy(
+          1,
+          Math.floor(
+            Math.random() * (canvas.getBoundingClientRect().width - 57)
+          ),
+          -51,
+          49,
+          35,
+          10,
+          "img/new/plain1_die1.png",
+          "img/new/plain1.png"
+        )
+      );
+      break;
+    case 5:
+      enemies.push(
+        new enemy(
+          2,
+          Math.floor(
+            Math.random() * (canvas.getBoundingClientRect().width - 57)
+          ),
+          -51,
+          69,
+          88,
+          20,
+          "img/new/plain2_die1.png",
+          "img/new/plain2.png"
+        )
+      );
+      break;
+    case 5:
+      enemies.push(
+        new enemy(
+          3,
+          Math.floor(
+            Math.random() * (canvas.getBoundingClientRect().width - 57)
+          ),
+          -51,
+          165,
+          250,
+          30,
+          "img/new/plain2_die1.png",
+          "img/new/plain2.png"
+        )
+      );
+      break;
   }
 }
 
@@ -75,7 +115,7 @@ function hitEnemies() {
       if (enemies[i].checkHit(bullets[j])) {
         enemies[i].hitted();
         bullets[j].hitted();
-        ply.score+=10;
+        ply.score += enemies[i].score;
       }
     }
   }

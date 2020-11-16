@@ -1,7 +1,7 @@
 class Bullet {
   constructor(X, Y, sizeX, sizeY, imageSrc) {
-    this.x = X - sizeX;
-    this.y = Y - sizeY;
+    this.x = X;
+    this.y = Y;
     this.imgnode = null;
     this.bulletattac = 1;
 
