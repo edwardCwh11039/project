@@ -95,7 +95,7 @@ function pause(e) {
   if (e.keyCode == 27) {
     if (state == PAUSE) {
       state = RUNNING;
-    } else {
+    } else if (state == RUNNING) {
       state = PAUSE;
     }
   }
