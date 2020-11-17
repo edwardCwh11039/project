@@ -1,44 +1,44 @@
-class enemy {
-  constructor(hp, X, Y, sizeX, sizeY, Score, boomimage, imagesrc) {
-    this.x = X;
-    this.y = Y;
+function enemy(hp, X, Y, sizeX, sizeY, Score, boomimage, imagesrc) {
+  this.x = X;
+  this.y = Y;
 
-    this.width = sizeX;
-    this.height = sizeY;
+  this.width = sizeX;
+  this.height = sizeY;
 
-    this.crashImg = boomimage;
-    this.imagenode = null;
+  this.crashImg = boomimage;
+  this.imagenode = null;
 
-    this.crash = false;
-    this.life = hp;
+  this.crash = false;
+  this.life = hp;
 
-    this.score = Score;
+  this.score = Score;
 
-    this.imgnode = document.createElement("img");
-    this.imgnode.src = imagesrc;
-  }
-  draw() {
+  this.imgnode = document.createElement("img");
+  this.imgnode.src = imagesrc;
+
+  this.draw = function () {
     context.drawImage(this.imgnode, this.x, this.y);
-  }
-  move() {
+  };
+  this.move = function () {
     this.y += 2;
-  }
-  checkHit(object) {
+  };
+  this.checkHit = function (object) {
     return (
       object.y + object.height > this.y &&
       object.x + object.width > this.x &&
       object.y < this.y + this.height &&
       object.x < this.x + this.width
     );
-  }
-  hitted(object) {
+  };
+  this.hitted = function () {
     this.life--;
     if (this.life == 0) {
       this.imgnode.src = this.crashImg;
       this.crash = true;
     }
-  }
+  };
 }
+
 
 function createEnemies(player) {
   var i = Math.floor(Math.random() * 10);
