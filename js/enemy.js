@@ -39,17 +39,15 @@ function enemy(hp, X, Y, sizeX, sizeY, Score, boomimage, imagesrc) {
   };
 }
 
-
-function createEnemies(player) {
-  var i = Math.floor(Math.random() * 10);
-  console.log(i);
+function createEnemies() {
+  var i = Math.floor(Math.random() * 100);
   switch (i) {
     case 1:
       enemies.push(
         new enemy(
           1,
           Math.floor(
-            Math.random() * (canvas.getBoundingClientRect().width - 57)
+            Math.random() * (canvas.getBoundingClientRect().width - 49)
           ),
           -51,
           49,
@@ -60,12 +58,12 @@ function createEnemies(player) {
         )
       );
       break;
-    case 5:
+    case 50:
       enemies.push(
         new enemy(
           2,
           Math.floor(
-            Math.random() * (canvas.getBoundingClientRect().width - 57)
+            Math.random() * (canvas.getBoundingClientRect().width - 69)
           ),
           -51,
           69,
@@ -76,12 +74,12 @@ function createEnemies(player) {
         )
       );
       break;
-    case 5:
+    case 99:
       enemies.push(
         new enemy(
           3,
           Math.floor(
-            Math.random() * (canvas.getBoundingClientRect().width - 57)
+            Math.random() * (canvas.getBoundingClientRect().width - 165)
           ),
           -51,
           165,
@@ -126,6 +124,7 @@ function removeEnemies() {
       enemies[i].y > canvas.getBoundingClientRect().height ||
       enemies[i].crash
     ) {
+      console.log(enemies.length);
       enemies.splice(i, 1);
     }
   }

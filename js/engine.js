@@ -139,17 +139,18 @@ function playGame() {
   };
 
   ply.draw();
-  ply.shoot();
-
   drawBullets();
-  BulletsMove();
-  removeBullet();
-
-  createEnemies(ply);
   drawEnemies();
-  EnemiesMove();
+
+  ply.shoot();
+  createEnemies();
+
   hitEnemies();
+  removeBullet();
   removeEnemies();
+
+  BulletsMove();
+  EnemiesMove();
 
   showInfo();
 }
