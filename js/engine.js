@@ -13,6 +13,9 @@ var state = START;
 var WIDTH = 480;
 var HEIGHT = 640;
 
+var background = new Background();
+var loading = new Loading();
+
 //backgorund constructor
 function Background() {
   this.img = new Image();
@@ -45,48 +48,36 @@ function Background() {
   };
 }
 
-var background = new Background();
-
-//animation for loading state
-var loadings = [];
-loadings[0] = new Image();
-loadings[0].src = "img/new/loading1.png";
-loadings[1] = new Image();
-loadings[1].src = "img/new/loading2.png";
-loadings[2] = new Image();
-loadings[2].src = "img/loading.png";
-var LOADINGS = {
-  imgs: loadings,
-  length: loadings.length,
-  width: 480,
-  height: 38,
-};
-
+//loading constructor and function
 //loading animation
-function Loading(config) {
-  this.imgs = config.imgs;
-  this.length = config.length;
-  this.width = config.width;
-  this.height = config.height;
+function Loading() {
+  this.imgs = [];
+  this.imgs[0] = new Image();
+  this.imgs[0].src = "img/new/loading1.png";
+  this.imgs[1] = new Image();
+  this.imgs[1].src = "img/new/loading2.png";
+  this.imgs[2] = new Image();
+  this.imgs[2].src = "img/loading.png";
+
+  this.length = this.imgs.length;
+  this.width = 480;
+  this.height = 38;
 
   this.startIndex = 0;
+
   this.paint = function () {
     context.drawImage(this.imgs[this.startIndex], 150, HEIGHT - this.height);
   };
 
-  this.time = 0;
   this.step = function () {
-    this.time++;
-    if (this.time % 3 == 0) {
+    if (this.startIndex < this.length) {
       this.startIndex++;
     }
-
     if (this.startIndex == this.length) {
       state = RUNNING;
     }
   };
 }
-var loading = new Loading(LOADINGS);
 
 canvas.onclick = function () {
   if (state == START) {
@@ -128,10 +119,6 @@ function init() {
 
   window.addEventListener("keydown", pause, true);
 }
-function handleMouseDown(e) {
-  var mousex = e.offsetX;
-  var mousey = e.offsetY;
-}
 
 function playGame() {
   canvas.onmousemove = function (e) {
@@ -150,7 +137,6 @@ function playGame() {
       ply.y = mousey - ply.height / 2;
     }
   };
-  canvas.onmousedown = handleMouseDown;
 
   ply.draw();
   ply.shoot();
@@ -171,6 +157,7 @@ function playGame() {
 setInterval(function () {
   background.paint();
   background.move();
+
   if (state == START) {
     context.font = "bold 20px Stylus";
     context.fillText("Aircraft War", 180, 50);
@@ -188,7 +175,6 @@ setInterval(function () {
     showInfo();
     context.font = "bold 50px Stylus";
     var text = "Pause";
-
     context.fillText(
       text,
       WIDTH / 2 - context.measureText(text).width / 2,
