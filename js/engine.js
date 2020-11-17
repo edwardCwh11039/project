@@ -13,22 +13,12 @@ var state = START;
 var WIDTH = 480;
 var HEIGHT = 640;
 
-//setup background as a image componet and declare the source
-var bg = new Image();
-bg.src = "img/bg.jpg";
-
-//declare the background size
-var BG = {
-  imgs: bg,
-  width: 480,
-  height: 852,
-};
-
-//backgorund class
-function Bg(config) {
-  this.imgs = config.imgs;
-  this.width = config.width;
-  this.height = config.height;
+//backgorund constructor
+function Background() {
+  this.img = new Image();
+  this.img.src = "img/bg.jpg";
+  this.width = 480;
+  this.height = 852;
 
   this.x1 = 0;
   this.y1 = 0;
@@ -37,8 +27,8 @@ function Bg(config) {
 
   //render the background
   this.paint = function () {
-    context.drawImage(this.imgs, this.x1, this.y1);
-    context.drawImage(this.imgs, this.x2, this.y2);
+    context.drawImage(this.img, this.x1, this.y1);
+    context.drawImage(this.img, this.x2, this.y2);
   };
 
   //move the background.
@@ -55,7 +45,7 @@ function Bg(config) {
   };
 }
 
-var background = new Bg(BG);
+var background = new Background();
 
 //animation for loading state
 var loadings = [];
