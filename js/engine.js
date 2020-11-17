@@ -42,7 +42,7 @@ function Bg(config) {
   };
 
   //move the background.
-  this.step = function () {
+  this.move = function () {
     this.y1++;
     this.y2++;
 
@@ -55,7 +55,7 @@ function Bg(config) {
   };
 }
 
-var sky = new Bg(BG);
+var background = new Bg(BG);
 
 //animation for loading state
 var loadings = [];
@@ -72,6 +72,7 @@ var LOADINGS = {
   height: 38,
 };
 
+//loading animation
 function Loading(config) {
   this.imgs = config.imgs;
   this.length = config.length;
@@ -178,8 +179,8 @@ function playGame() {
 }
 
 setInterval(function () {
-  sky.paint();
-  sky.step();
+  background.paint();
+  background.move();
   if (state == START) {
     context.font = "bold 20px Stylus";
     context.fillText("Aircraft War", 180, 50);
@@ -196,7 +197,13 @@ setInterval(function () {
     drawEnemies();
     showInfo();
     context.font = "bold 50px Stylus";
-    context.fillText("Paused", 110, 300);
+    var text = "Pause";
+
+    context.fillText(
+      text,
+      WIDTH / 2 - context.measureText(text).width / 2,
+      HEIGHT / 2
+    );
   } else if (state == GAMEOVER) {
     ply.draw();
     drawEnemies();
